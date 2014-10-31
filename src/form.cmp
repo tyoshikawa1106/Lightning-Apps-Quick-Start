@@ -1,0 +1,58 @@
+<aura:component controller="BarnSwallow.ExpenseController" implements="force:appHostable">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="BarnSwallow:updateExpenseItem" action="{!c.updateEvent}" />
+    <aura:attribute name="expenses" type="BarnSwallow.expense__c[]" />
+    <aura:attribute name="newExpens" type="BarnSwallow__Expense__c"
+                      default="{ 'sobjectType': 'BarnSwallow__Expense__c',
+                                      'Name': '',
+                                      'BarnSwallow__Amount__c': 0,
+                                      'BarnSwallow__Client__c': 0,
+                                      'BarnSwallow__Date__c': '',
+                                      'BarnSwallow__Reimbursed__c': false
+                                 }" />
+    <!-- Attributes for Expense Counters -->
+    <aura:attribute name="total" type="Double" default="0.00" />
+    <aura:attribute name="exp" type="Double" default="0" />
+    <!-- Input Form using components -->
+    <form>
+        <fieldset>
+            <ui:inputText aura:id="expname" label="Expense Name"
+                          class="form-control"
+                          value="{!v.newExpense.name}"
+                          placeholder="My Expense" required="true"/>
+            <ui:inputNumber aura:id="amount" label="Amount"
+                            class="form-control"
+                            value="{!v.newExpense.namespace__Amount__c}"
+                            placeholder="20.80" required="true"/>
+            <ui:inputText aura:id="client" label="Client"
+                          class="form-control"
+                          value="{!v.newExpense.namespace__Client__c}"
+                          placeholder="ABC Co."/>
+            <ui:inputDateTime aura:id="expdate" label="Expense Date"
+                              class="form-control"
+                              value="{!v.newExpense.namespace__Date__c}"
+                              displayDatePicker="true"/>
+            <ui:inputCheckbox aura:id="reimbursed" label="Reimbursed?"
+                              value="{!v.newExpense.namespace__Reimbursed__c}"/>
+            <ui:button label="Submit" press="{!c.createExpense}"/>
+        </fieldset>
+    </form>
+    
+    <!-- Expense Counters -->
+    <div class="row">
+        <!-- Change the counter color to red if total amount is more than 100 -->
+        <div class="{!v.total >= 100 ? 'alert alert-danger' : 'alert alert-success'}">
+            <h3>Total Expenses</h3>$<ui:outputNumber value="{!v.total}" format=".00"/>
+        </div>
+        <div class="alert alert-success">
+            <h3>No. of Expenses</h3><ui:outputNumber value="{!v.exp}"/>
+        </div>
+    </div>
+    <!-- Display expense records -->
+    <div class="row">
+        <aura:iteration items="{!v.expenses}" var="expense">
+            <BarnSwallow:expenseList expense="{!expense}"/>
+        </aura:iteration>
+    </div>
+</aura:component>

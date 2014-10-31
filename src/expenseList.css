@@ -1,0 +1,30 @@
+.THIS.recordLayout {
+    list-style: none;
+    padding: 14px;
+    margin: 10px;
+    border-bottom:1px solid #cfd4d9;
+}
+.THIS.listRecord {
+    margin: 14px;
+    border-radius: 5px;
+    border: 1px solid #cfd4d9;
+    position: relative;
+}
+.THIS .uiOutputText {
+    line-height: 1.1em;
+}
+.THIS .itemTitle {
+    font-size: 15px;
+    padding-bottom: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.THIS .recordItem {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.THIS a:hover {
+    text-decoration: none;
+    background-color: #235636;
+}
